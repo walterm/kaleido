@@ -1,0 +1,198 @@
+<!DOCTYPE 5>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="./js/chosen_v1.1.0/chosen.css">
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/stub_data.js"></script>
+    <script type="text/javascript" src="./js/data_sorting_utils.js"></script>
+    <script type="text/javascript" src="./js/filtering.js"></script>
+    <script type="text/javascript" src="./js/chosen_v1.1.0/chosen.jquery.js"></script>
+    <style type="text/css">
+
+      .select {
+        display: none;
+      }
+
+      .display {
+        display: block !important;
+      }
+
+    </style>
+  </head>
+  <body>
+    
+  <div class="step_1">
+    <h3>Step 1: Chart Selection</h3>
+
+    <input type="radio" name="chart" value="scatter">Scatter Plot</input>
+    <input type="radio" name="chart" value="histogram">Histogram</input>
+    <input type="radio" name="chart" value="pie">Pie Chart</input>
+    <input type="radio" name="chart" value="line">Pie Chart</input>
+    <input type="radio" name="chart" value="area">Area Chart</input>
+    <input type="radio" name="chart" value="polar">Polar Graph</input>
+    <input type="radio" name="chart" value="heatmap">Heatmap</input>
+  </div>
+
+  <div class="step_2 select">
+    <h3>Step 2: Slot Selection</h3>
+
+    <div class="scatter_select select">
+      <div class="scatter_options">
+        <label>X Axis: </label> <input type="text" name="x_axis" class="mandatory quant"/>
+        <label>Y Axis: </label> <input type="text" name="y_axis" class="mandatory quant"/>
+
+        <label>Color: </label> <input type="text" name="color" class="cat"/>
+        <label>Size: </label> <input type="text" name="size" class="quant"/>
+        <!-- <label>Shape: </label> <input type="text" name="shape" class="cat"/> -->
+      </div>
+    </div>
+    <div class="histogram_select select">
+      <div class="histogram_options">
+        <label>X Axis: </label> <input type="text" name="histogram_x_axis" class="quant cat"/> <br/>
+        <label>Height: </label> <input type="text" name="histogram_height" class="quant"/>
+        <select for="histogram_height" class="aggregate">
+          <option value="sum">Sum</option>
+          <option value="avg">Average</option>
+          <option value="max">Max</option>
+          <option value="min">Min</option>
+          <option value="count">Count</option>
+        </select> <br/>
+        <label>Stacks: </label> <input type="text" name="stacks" class="cat"/>
+      </div>
+    </div>
+    <div class="pie_select select">
+      <div class="pie_options">
+        <label>Segment: </label> <input type="text" name="pie_segment" class="quant cat"/>
+        <label>Area: </label> <input type="text" name="pie_area" class="quant"/>
+        <select for="pie_area" class="aggregate">
+          <option value="sum">Sum</option>
+          <option value="avg">Average</option>
+          <option value="max">Max</option>
+          <option value="min">Min</option>
+          <option value="count">Count</option>
+        </select>
+      </div>
+    </div>
+    <div class="line_select select">
+      <div class="line_options">
+        <label>X Axis: </label> <input type="text" name="line_x_axis" class="quant"/>
+        <label>Y Axis: </label> <input type="text" name="line_y_axis" class="quant"/>
+        <select for="line_y_axis" class="aggregate">
+          <option value="sum">Sum</option>
+          <option value="avg">Average</option>
+          <option value="max">Max</option>
+          <option value="min">Min</option>
+          <option value="count">Count</option>
+        </select>
+      </div>
+    </div>
+    <div class="area_select select">
+      <div class="area_options">
+        <label>X Axis: </label> <input type="text" name="area_x_axis" class="quant"/>
+        <label>Y Axis: </label> <input type="text" name="area_y_axis" class="quant"/>
+        <select for="area_y_axis" class="aggregate">
+          <option value="sum">Sum</option>
+          <option value="avg">Average</option>
+          <option value="max">Max</option>
+          <option value="min">Min</option>
+          <option value="count">Count</option>
+        </select>
+        <label>Stacks: </label> <input type="text" name="stacks" class="cat"/>
+      </div>
+    </div>
+    <div class="polar_select select">
+      <div class="polar_options">
+        <label>Radius: </label> <input type="text" name="radius" class="quant cat"/>
+        <label>Angle: </label> <input type="text" name="angle" class="cat"/>
+        <label>Color: </label> <input type="text" name="color" class="cat"/>
+        <label>Size: </label> <input type="text" name="size" class="quant"/>
+      </div>
+    </div>
+      <div class="heatmap_select select">
+        <div class="heatmap_options">
+          <label>X Axis: </label> <input type="text" name="x_axis" class="quant cat"/>
+          <label>Y Axis: </label> <input type="text" name="y_axis" class="quant cat"/>
+          <label>Color: </label> <input type="text" name="heatmap_color" class="quant"/>
+          <select for="heatmap_color" class="aggregate">
+          <option value="sum">Sum</option>
+          <option value="avg">Average</option>
+          <option value="max">Max</option>
+          <option value="min">Min</option>
+          <option value="count">Count</option>
+          </select>
+        </div>
+    </div>
+
+    <div class="step_3 select">
+      <h3>Step 3: Filtering</h3>
+      <input type="text" name="filter_field" placeholder="Enter filter field..." class="filter_field"/>
+      <div class="filters"></div>
+      <button>GRAPH IT!</button>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+  $(function(){
+    var graph = "";
+    $("input[type=radio]").each(function(index, elem){
+      $(elem).click(function(evt){
+        var val = $(this).val();
+        graph = val;
+        $(".display").removeClass("display");
+        $("." + val + "_select").add(".step_2").addClass("display");
+      });
+    });
+
+    $(".quant").add(".cat").each(function(index, elem){
+      var fields = textFields(elem)();
+      $(elem).autocomplete({
+        source: fields,
+        select: function(event, ui){
+          var empty = $("." + graph + "_options").find("input").filter(function(index, elem){
+            return $(elem).val().length === 0;
+          });
+          if(empty.length === 0){
+            $(".step_3").addClass("display");
+            $(".step_3").removeClass("select");
+          } 
+        }
+      });
+    });
+
+    $(".aggregate").each(function(index, elem){
+      $(elem).change(function(event){
+        console.log("changed", $(elem).val());
+
+        if( $(elem).val() === "count"){
+          console.log("input[name=" + $(elem).attr("for") + "]");
+          $("input[name=" + $(elem).attr("for") + "]").hide();
+        }else $("input[name=" + $(elem).attr("for") + "]").show();
+      });
+    });
+    var allFields = findBoth(data);
+    $(".filter_field").autocomplete({
+      source: allFields,
+      select: function(event, ui){
+
+        var field = $(".filter_field").val();
+        $(".filter_field").val("");
+        addFilter(field);
+        return false;
+      }
+    });
+
+
+
+  });
+
+  </script>
+
+  </body>
+</html>
