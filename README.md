@@ -1,2 +1,3 @@
 kaleido
 =======
+Graphing library.
