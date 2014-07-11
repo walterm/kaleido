@@ -1,6 +1,6 @@
 var addFilter = function(field){
 	var schema = data[field];
-	console.log(schema[TYPE]);
+	console.log(schema);
 	switch(schema[TYPE]){
 		case STRING:
 			addStringFilter(field);
@@ -22,20 +22,40 @@ var isCategory = function(field){
 	}
 };
 
+var addRemoveIcon = function(field){
+	var icon = $('<i class="fa fa-trash-o"></i>');
+	icon.click(function(evt){
+		if(data[field][TYPE] === CATEGORY){
+			$("." + field.replace(/\./g, "-")).remove();
+		}
+		$("[filter_field='"+field+"']").remove();
+
+	});
+	return icon;
+};
+
+
 /* ADD EVENT LISTENERS TO UPDATE THE QUERY AND RENDER THE GRAPH ON CHANGE OF A FILTER FIELD */
+/* ADD REMOVE BUTTON FOR FILTERS */
 var addStringFilter = function(field){
-	var label = $("<label></label>").html(field),
-	text = $("<input type='text' name='" + field + "'/><br/>");
+	var row = $("<div></div>");
+
+	var label = $("<label></label>").html(field).append(addRemoveIcon(field)),
+	text = $("<input class='stringFilter' style='width: 100%;' type='text' name='" + field + "'/><br/>");
 	text.attr("filter_field", field);
-	$(".filters").append(label);
-	$(".filters").append(text);
+	label.attr("filter_field", field);
+	row.append(label);
+	$(".filters").append(row).append(text);//.append(label).append(text);
 };
 
 var addNumberFilter = function(field){
-	var label = $("<label></label>").html(field),
+	var row = $("<div></div>"),
+	label = $("<label></label>").html(field).append(addRemoveIcon(field)),
 	slider = $("<div></div>"),
-	amount = $("<label></label>");
-	console.log(data[field]["$data"]);
+	amount = $("<div class='col-md-1'></div>").html(data[field]["$data"]["min"]+ " - " + data[field]["$data"]["max"]);
+	slider.attr("filter_field", field);
+	label.attr("filter_field", field);
+	amount.attr("filter_field", field);
 	slider.slider({
 		range: true,
 		min: data[field]["$data"]["min"],
@@ -46,21 +66,28 @@ var addNumberFilter = function(field){
 		}
 	});
 
-	$(".filters").append(label);
-	$(".filters").append(amount);
-	$(".filters").append(slider);
+	$(row).append(label);
+	$(".filters").append(row).append(amount).append($("<div class='col-md-10'></div>").append(slider)).append($("<br/>"));
 };
 
 var addCategoryFilter = function(field){
-	console.log("category");
-	var label = $("<label></label>").html(field),
-	selector = $("<select multiple></select>");
+	var row = $("<div class='row'></div>"), 
+	label = $("<label></label>").html(field).append(addRemoveIcon(field)),
+	selector = $("<select style='width: 100%;' multiple></select>");
+	selector.attr("filter_field", field);
+	label.attr("filter_field", field);
 	var categories = Object.keys(data[field]["$data"]);
 	categories.map(function(cat){
 		var option = $("<option></option>");
 		option.attr("value", cat).html(cat);
-		$(selector).append(option);
+		selector.append(option);
 	});
-	$(".filters").append(label);
+
+	row.append($('<div class="col-md-3"></div>').append(label));
+	row.append($('<div class="col-md-2"></div>').append(selector));
+	$(".filters").append(row);
+
 	$(".filters").append(selector);
+	var newClass = field.replace(/\./g, "-");
+	selector.select2({containerCssClass: newClass});
 };
